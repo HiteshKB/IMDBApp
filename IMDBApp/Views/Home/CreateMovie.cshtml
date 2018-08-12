@@ -1,0 +1,336 @@
+﻿@model IMDBApp.Models.Movie
+@{
+    ViewBag.Title = "CreateMovie";
+}
+
+<h2>CreateMovie</h2>
+@section maincontent{
+    <link rel="stylesheet" href="~/Content/jquery-ui.css">
+    @using (Html.BeginForm("CreateMovie", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div id="tabs">
+            <ul>
+                <li><a href="#tag-1" id=""><span style="color:darkblue;">Actor Details</span></a></li>
+                <li><a href="#tag-2" id=""><span style="color:darkblue;">Director Details</span></a></li>
+                <li><a href="#tag-3" id=""><span style="color:darkblue;">Movie Details</span></a></li>
+            </ul>
+            <div id="tag-1">
+                <div class="tdiv">
+                    <label class="dispName">Actor Name</label>
+                    <input type="text" class="dispVal" id="ActorName" required />
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">Gender</label>
+                    <select class="dispVal" id="ActorSex">
+                        <option id="M" value="M">Male</option>
+                        <option id="F" value="F">Female</option>
+                    </select>
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">DOB</label>
+                    <input type="number" class="dispVal" id="ActorDOB" required title="DD/MM/YYYY is the correct format" pattern="\d{1,2}/\d{1,2}/\d{4}" />
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">BIO</label>
+                    <input type="text" class="dispVal" id="ActorBIO" />
+                </div>
+                <input type="button" class="yelbtn syslowerbtn" id="actorCreate" value="Add"/>
+                <br />
+            </div>
+            <div id="tag-2">
+                <div class="tdiv">
+                    <label class="dispName">Producer Name</label>
+                    <input type="text" class="dispVal" id="ProdName" required />
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">Gender</label>
+                    <select class="dispVal" id="ProdSex">
+                        <option id="M" value="M">Male</option>
+                        <option id="F" value="F">Female</option>
+                    </select>
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">DOB</label>
+                    <input type="number" class="dispVal" id="ProdDOB" required title="DD/MM/YYYY is the correct format" pattern="\d{1,2}/\d{1,2}/\d{4}" />
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">BIO</label>
+                    <input type="text" class="dispVal" id="ProdBIO" />
+                </div>
+                <input type="button" class="yelbtn syslowerbtn" id="producerCreate" value="Add"/>
+                <br />
+            </div>
+            <div id="tag-3">
+                <div class="tdiv">
+                    <label class="dispName">Movie Name</label>
+                    <input type="text" class="dispVal" id="Name" name="Name" required />
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">Release Year</label>
+                    <input type="number" class="dispVal" id="Year" name="Year" required min="1800" max="2050" title="Year should be 4 digit" />
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">Plot</label>
+                    <select class="dispVal" id="Plot" name="Plot">
+                        <option>Bollywood</option>
+                        <option>Hollywood</option>
+                        <option>Tollywood</option>
+                    </select>
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">Poster</label>
+                    <input type="text" class="dispVal" id="Poster" name="Poster" />
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">Producer</label>
+                    <select class="dispVal" id="Producer" name="Producer" required></select>
+                    <img src="~/Images/question.jpg" onclick="showProdDialog()" style="width:20px"/>
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">Actors</label>
+                    <select class="dispVal" id="Actors" required></select>
+                    <img src="~/Images/question.jpg" onclick="showActorDialog()" style="width:20px"/>
+                    <img id="AddList" src="~/Images/add.png" onclick="addtoList()" />
+                    <label id="lstActors"></label>
+                    <img id="RemoveList" src="~/Images/minus.png" onclick="removeFromList()" style="height:15px" />
+                    <input type="text" class="dispVal" id="ActorsID" name="Actors" hidden />
+                </div>
+                <input type="submit" class="yelbtn syslowerbtn" value="Create" />
+                <br />
+            </div>
+        </div>
+
+    }
+    @if (ViewBag.Res == 1)
+    {
+        <script>
+            $(document).ready(function () {
+                $("p.popupMessage").text("New Movie added succesfully!!!");
+                modal.style.display = "block";
+            });
+        </script>
+    }
+
+    <script>
+        $("#tabs").tabs({
+            active: 2
+            });
+        function tab1() {
+            $("#tabs").tabs({
+                active: 0
+            });
+            $('popBtn').hide();
+            modal.style.display = "none";
+        }
+        function tab2() {
+            $("#tabs").tabs({
+                active: 1
+            });
+            $('popBtn').hide();
+            modal.style.display = "none";
+        }
+        function tab3() {
+            $("#tabs").tabs({
+                active: 2
+            });
+            $('popBtn').hide();
+            modal.style.display = "none";
+        }
+        var actorsId = '';
+        function addtoList() {
+            if ($('#Actors').find(":selected").val()!='0'){
+                if (actorsId == '') {
+                    actorsId = $('#Actors').find(":selected").val();
+                    $('#lstActors').text($('#Actors').find(":selected").text());
+                }
+                else {
+                    actorsId = actorsId + ',' + $('#Actors').find(":selected").val();
+                    $('#lstActors').text($('#lstActors').text() + ',' + $('#Actors').find(":selected").text());
+                }
+                $('#ActorsID').val(actorsId);
+            }
+            else {
+                alert('Please select any actor first...');
+            }
+        }
+        function removeFromList() {
+            var posid = actorsId.lastIndexOf(',');
+            actorsId = actorsId.substring(0, posid);
+            var pos = $('#lstActors').text().lastIndexOf(',');
+            $('#lstActors').text($('#lstActors').text().substring(0, pos));
+        }
+        function showProdDialog() {
+            $("p.popupMessage").text("Producer Not found ??");
+            $("#popBtn").show();
+            $("#popBtn").prop("value", "Add new Producer");
+            $("#popBtn").attr("onclick", "tab2()");
+            modal.style.display = "block";
+        }
+        function showActorDialog() {
+            $("p.popupMessage").text("Actor Not found ??");
+            $("#popBtn").show();
+            $("#popBtn").prop("value", "Add new Actor");
+            $("#popBtn").attr("onclick", "tab1()");
+            modal.style.display = "block";
+        }
+        $("#actorCreate").click(function () {
+            alert('actorCreate');
+             $.ajax({
+                type: "POST",
+                url: '@Url.Action("CreateActor")',
+                data: {
+                    "name": $('#ActorName').val(),
+                    "sex": $('#ActorSex').find(":selected").val(),
+                    "dob": $('#ActorDOB').val(),
+                    "bio": $('#ActorBIO').val()
+                },
+                datatype: 'JSON',
+                success: function (data) {
+                    if (data == 1) {
+                        $("p.popupMessage").text("New Actor added succesfully!!!");
+                        $("#popBtn").show();
+                        $("#popBtn").prop("value", "Add Movie now...");
+                        $("#popBtn").attr("onclick", "tab3()");
+                        modal.style.display = "block";
+                        refresh();
+                    }
+                    else {
+                        alert("Error in inserting Actor...");
+                    }
+                },
+                error: function () {
+                    alert("Error in inserting Actor...");
+                },
+            })
+        });
+        $("#producerCreate").click(function () {
+            alert('producerCreate');
+             $.ajax({
+                type: "POST",
+                url: '@Url.Action("CreateProducer")',
+                data: {
+                    "name": $('#ProdName').val(),
+                    "sex": $('#ProdSex').find(":selected").val(),
+                    "dob": $('#ProdDOB').val(),
+                    "bio": $('#ProdBIO').val()
+                },
+                datatype: 'JSON',
+                success: function (data) {
+                    if (data == 1) {
+                        $("p.popupMessage").text("New Producer added succesfully!!!");
+                        $("#popBtn").show();
+                        $("#popBtn").prop("value", "Add Movie now...");
+                        $("#popBtn").attr("onclick", "tab3()");
+                        modal.style.display = "block";
+                        refresh();
+                    }
+                    else {
+                        alert("Error in inserting Producer...");
+                    }
+                },
+                error: function () {
+                    alert("Error in inserting Producer...");
+                },
+            })
+        });
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("PopulateActors")',
+                datatype: 'JSON',
+                success: function (data) {
+                    var select = $("#Actors");
+                    select.empty();
+                    select.append($('<option/>', {
+                        value: 0,
+                        text: "           -- Select --"
+                    }));
+                    data: { }
+                    $.each(data, function (index, itemData) {
+                        select.append($('<option/>', {
+                            value: itemData.ID,
+                            text: itemData.Name,
+                        }));
+                    });
+                },
+                error: function () {
+                    alert("Error in Populating Actors!!!");
+                },
+            })
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("PopulateProducers")',
+                datatype: 'JSON',
+                success: function (data) {
+                    var select = $("#Producer");
+                    select.empty();
+                    select.append($('<option/>', {
+                        value: 0,
+                        text: "           -- Select --"
+                    }));
+                    data: { }
+                    $.each(data, function (index, itemData) {
+                        select.append($('<option/>', {
+                            value: itemData.ID,
+                            text: itemData.Name,
+                        }));
+                    });
+                },
+                error: function () {
+                    alert("Error in Populating Producers!!!");
+                },
+            })
+        });
+        function refresh() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("PopulateActors")',
+                datatype: 'JSON',
+                success: function (data) {
+                    var select = $("#Actors");
+                    select.empty();
+                    select.append($('<option/>', {
+                        value: 0,
+                        text: "           -- Select --"
+                    }));
+                    data: { }
+                    $.each(data, function (index, itemData) {
+                        select.append($('<option/>', {
+                            value: itemData.ID,
+                            text: itemData.Name,
+                        }));
+                    });
+                },
+                error: function () {
+                    alert("Error in Populating Actors!!!");
+                },
+            })
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("PopulateProducers")',
+                datatype: 'JSON',
+                success: function (data) {
+                    var select = $("#Producer");
+                    select.empty();
+                    select.append($('<option/>', {
+                        value: 0,
+                        text: "           -- Select --"
+                    }));
+                    data: { }
+                    $.each(data, function (index, itemData) {
+                        select.append($('<option/>', {
+                            value: itemData.ID,
+                            text: itemData.Name,
+                        }));
+                    });
+                },
+                error: function () {
+                    alert("Error in Populating Producers!!!");
+                },
+            })
+        }
+    </script>
+}
+
+

@@ -1,0 +1,524 @@
+/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
+
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+#wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+h2 {
+    font: 25px;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin: 0 auto;
+    width: 95%;
+    overflow: hidden;
+}
+
+#main-header {
+    height: 80px;
+    background: #333;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#branding {
+    float: left;
+    width: 60%;
+}
+
+    #branding h1 {
+        text-align: right;
+        padding: 10px 0 0 0;
+        color: #fff;
+    }
+
+    #branding img {
+        position: absolute;
+        width: 130px;
+        height: 92px;
+    }
+
+#log-nav {
+    float: right;
+    width: 40%;
+    font-size: 20px;
+}
+
+    #log-nav img {
+        width: 30px;
+        height: auto;
+        float: right;
+        height: 25px;
+        padding-top: 5px;
+    }
+
+    #log-nav span {
+        color: #fff;
+        float: right;
+        padding: 5px 5px 0px 5px;
+    }
+
+    #log-nav li {
+        float: left;
+        padding: 15px 5px 0px 5px;
+        margin: 0 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        list-style: square;
+        color: #fff;
+    }
+
+    #log-nav div {
+        color: #fff;
+        float: right;
+        padding: 5px 0px 0px 5px;
+    }
+
+#content {
+    float: right;
+    width: 80%;
+}
+
+#sidebar {
+    float: left;
+    width: 15%;
+    padding: 7px 20px 0px 20px;
+}
+
+.search {
+    float: left;
+    padding: 30px 0px 0px 0px;
+}
+
+    .search input[type="search"] {
+        border: #000 1px solid;
+        border-radius: 5px;
+        height: 20px;
+        width: 75%;
+        padding: 3px;
+        float: left;
+        font-size: small;
+    }
+
+    .search input[type="image"] {
+        float: left;
+        width: 15%;
+        padding: 0px 5px 5px 0px;
+    }
+
+#sub-nav {
+    padding: 10px 0px 20px 0px;
+}
+
+    #sub-nav li {
+        font-size: 16px;
+        font-weight: bold;
+        border-bottom: dotted 1px #333;
+        padding: 5px 0px 5px 0px;
+        list-style: none;
+    }
+
+    #sub-nav a {
+        color: #333;
+    }
+
+        #sub-nav a:hover, #sub-nav a.active {
+            color: #ff0000;
+        }
+
+footer {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    background: #333;
+    color: #fff;
+    min-height: 20px;
+    margin-top: 10px;
+    overflow: auto;
+    font-size: small;
+}
+
+/* ==========================================================================
+   Old CSS for NonLayout Pages
+   ========================================================================== */
+.popBckGrnd {
+    display: none;
+	background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.5); 
+	position: fixed; left: 0; top: 0; 
+	width: 100%; height: 100%;
+	z-index: 9999;
+}
+.popCntnt {
+    background: #fff;
+    width: 300px;
+    padding: 20px;
+    border: 20px solid #ddd;
+    float: left;
+    font-size: 1.2em;
+    position: fixed;
+    top: 35%;
+    left: 37%;
+    z-index: 99999;
+    -webkit-box-shadow: 0px 0px 20px #000;
+    -moz-box-shadow: 0px 0px 20px #000;
+    box-shadow: 0px 0px 20px #000;
+    -webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+.popClose {
+    float: right; 
+    width:25px;
+	margin: -30px -25px 0px 0px;
+    border-radius:50px;
+}
+
+.popClose:hover,
+.popClose:focus {
+    width:30px;
+    cursor: pointer;
+}
+/* Make it a marquee */
+.marquee {
+    width: 100%;
+    margin: 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.marquee span {
+    font-family: Calibri;
+    font-size: medium;
+    font-weight: normal;
+    color: red;
+    display: inline-block;
+    padding-left: 100%;
+    text-indent: 0;
+    animation: marquee 20s linear infinite;
+}
+.marquee span:hover {
+    animation-play-state: paused
+}
+
+/* Make it move */
+@keyframes marquee {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
+.brdr {
+    border: 1px solid #000000;
+}
+
+.yelbtn {
+    background-color: darkblue;
+    color: yellow;
+    font-family: Calibri;
+    font-size: medium;
+    font-weight: normal;
+}
+
+.syslowerbtn {
+    float: left;
+    width: 25%;
+    margin-top: 20px;
+}
+
+.blufnt {
+    font-family: Calibri;
+    font-size: medium;
+    background-color: white;
+    color: darkblue;
+}
+
+h4 {
+    border: 1px solid #2F4F4F;
+    color: darkblue;
+    background-color: silver; /*#00a65a*/
+    font-family: Arial, Sans-Serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding:2px 5px 2px 5px;
+    margin: 10px 0px 3px 0px;
+    cursor: pointer;
+    height: 20px;
+}
+
+.tdiv {
+    width: 100%;
+    font-family: Calibri;
+    margin-bottom: 18px;
+}
+
+.dispName {
+    width: 20%;
+    float: left;
+    background-color: #E7E7E7;
+}
+
+.dispVal {
+    width: 24%;
+    height: 17px;
+    margin-left: 4%;
+}
+
+div.tdiv select.dispVal {
+    font-size: 15px;
+    font-family: Calibri;
+    vertical-align: middle;
+    width:24.5%;
+    height:21px;
+}
+
+div.tdiv input[type="number"] {
+    font-size: medium;
+    font-family: Calibri;
+}
+
+div.tdiv input[type=number]::-webkit-inner-spin-button,
+div.tdiv input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+div.tdiv input[type="email"] {
+    font-size: medium;
+    font-family: Calibri;
+}
+
+div.tdiv input[type="text"] {
+    font-size: medium;
+    font-family: Calibri;
+}
+
+div.tdiv input[type="date"] {
+    font-size: medium;
+    font-family: Calibri;
+}
+
+div.tdiv textarea {
+    width: 70%;
+    height: 35px;
+    margin-left: 4%;
+    font-size: medium;
+    font-family: Calibri;
+}
+
+.imgIcon {
+    width: 18px;
+    vertical-align: middle;
+}
+
+#lgnstl {
+    width: 150%;
+    height: 150%;
+    background-color: #e7e7e7;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 50% 50% 50% 50%;
+}
+
+#par {
+    margin-top: 15px;
+    color: black;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+/*@media only screen and (min-width: 35em) {
+}
+
+@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+}*/
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+    .visuallyhidden.focusable:active,
+    .visuallyhidden.focusable:focus {
+        clip: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        position: static;
+        width: auto;
+    }
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   Print styles
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+        a[href]:after {
+            content: " (" attr(href) ")";
+        }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

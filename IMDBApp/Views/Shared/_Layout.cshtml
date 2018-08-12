@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html style="display:table;width:80%;height:100%;margin-left:10%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Tender Key Management</title>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+</head>
+<body>
+
+    <div style="height:95%; ">
+        <header>
+            <a href="@Url.Action("Index", "Home")">
+                <span>
+                    <img src="~/Images/BestBuyLogo.jpg" title="Go to Summary Page" />
+                </span>
+            </a>
+            <img id="logoutImg" class="logoutImg" src="~/Images/logout.jpg" title="Logout" />
+            <a href="@Url.Action("ViewLogs", "Home")" title="View Logs">
+                <span class="TKMTitle"> Tender Key Management</span>
+            </a>
+        </header>
+        <div id="popBckGrnd" class="popBckGrnd">
+            <div class="popCntnt">
+                <img class="popClose" src="~/Images/closeBtn.png" />
+                <p class="popupMessage"></p>
+                <input type="button" class="yelbtn" id="popBtn" />
+            </div>
+        </div>
+        <section style="width:100%;">
+            @RenderSection("headerbox", required: false)
+
+            @RenderSection("maincontent", required: false)
+            <h3></h3>
+        </section>
+    </div>
+    <footer>
+        <h4>
+            <strong>Copyright &copy; 2016-2017 <a href="http://www.BestBuy.com" style="color: black">BestBuy</a>.</strong> All rights reserved.
+            <b style="float:right;">Version 1.0</b>
+        </h4>
+    </footer>
+    <script type="text/javascript">
+        var modal = document.getElementById('popBckGrnd');
+        var btn = document.getElementById("logoutImg");
+        var span = document.getElementsByClassName("popClose")[0];
+        var grp = '@Session["Group"]';
+        function CheckGroup() {
+            if (grp != '' && grp == 'TKM_Admin') {
+                return true;
+            }
+            else {
+                $("p.popupMessage").text("Sorry...Admin Access Required!!!");
+                $("#popBtn").hide();
+                modal.style.display = "block";
+                return false;
+            }
+        }
+        btn.onclick = function () {
+            $("p.popupMessage").text("Want to SignOut???");
+            $("#popBtn").show();
+            $("#popBtn").prop("value", "SignOut");
+            $("#popBtn").attr("onclick", "location.href='@Url.Action("LogOff", "Home")'");
+            modal.style.display = "block";
+        }
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        $(document).ready(function () {
+            if (grp != '' && grp == 'TKM_Admin') {
+                if ($(".marquee")[0]) {
+                    document.getElementsByClassName('marquee')[0].style.display = 'none';
+                    //document.getElementsByClassName('marquee').disabled = true;
+                }
+            }
+            else {
+                if ($(".marquee")[0]) {
+                    document.getElementsByClassName('marquee')[0].style.display = 'block';
+                    //document.getElementsByClassName('marquee').disabled = false;
+                }
+            }
+            
+        });
+
+    </script>
+</body>
+</html>

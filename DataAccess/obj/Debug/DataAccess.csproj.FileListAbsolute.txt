@@ -1,0 +1,6 @@
+E:\Coding\DeltaX\App\IMDBApp\DataAccess\bin\Debug\DataAccess.dll
+E:\Coding\DeltaX\App\IMDBApp\DataAccess\bin\Debug\DataAccess.pdb
+E:\Coding\DeltaX\App\IMDBApp\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+E:\Coding\DeltaX\App\IMDBApp\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
+E:\Coding\DeltaX\App\IMDBApp\DataAccess\obj\Debug\DataAccess.dll
+E:\Coding\DeltaX\App\IMDBApp\DataAccess\obj\Debug\DataAccess.pdb

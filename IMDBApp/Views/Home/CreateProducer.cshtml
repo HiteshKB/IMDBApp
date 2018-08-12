@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "CreateProducer";
+}
+
+<h2>CreateProducer</h2>
+@section maincontent{
+    <link rel="stylesheet" href="~/Content/jquery-ui.css">
+    @using (Html.BeginForm("CreateProducer", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div id="tabs">
+            <ul>
+                <li><a href="" id="tag-1"><span style="color:darkblue;">Actor Details</span></a></li>
+                <li><a href="#tag-2" id=""><span style="color:darkblue;">Director Details</span></a></li>
+                <li><a href="" id="tag-3"><span style="color:darkblue;">Movie Details</span></a></li>
+            </ul>
+            <div id="tag-2">
+                <div class="tdiv">
+                    <label class="dispName">Producer Name</label>
+                    <input type="text" class="dispVal" id="Name" name="Name" required />
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">Gender</label>
+                    <select class="dispVal" id="Sex" name="Sex">
+                        <option id="M" value="M">Male</option>
+                        <option id="F" value="F">Female</option>
+                    </select>
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">DOB</label>
+                    <input type="number" class="dispVal" id="DOB" name="DOB" required title="DD/MM/YYYY is the correct format" pattern="\d{1,2}/\d{1,2}/\d{4}" />
+                </div>
+                <div class="tdiv">
+                    <label class="dispName">BIO</label>
+                    <input type="text" class="dispVal" id="BIO" name="BIO" />
+                </div>
+                <input type="submit" class="yelbtn syslowerbtn" value="Create" />
+                <br />
+            </div>
+        </div>
+
+    }
+    @if (ViewBag.Res == 1)
+    {
+        <script>
+            $(document).ready(function () {
+                $("p.popupMessage").text("New Producer added succesfully!!!");
+                modal.style.display = "block";
+            });
+        </script>
+    }
+
+    <script>
+        $("#tabs").tabs({
+            active: 1
+        });
+        //$("#tabs").tabs("option", "disabled", [2]);
+
+        $(document).ready(function () {
+            document.getElementById('tag-1').onclick = function () {
+                window.location = '@Url.Action("CreateActor")';
+            };
+            document.getElementById('tag-3').onclick = function () {
+                window.location = '@Url.Action("CreateMovie")';
+            };
+        });
+    </script>
+}
+
+

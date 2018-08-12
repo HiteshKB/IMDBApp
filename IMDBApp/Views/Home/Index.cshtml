@@ -1,0 +1,219 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@using System.Data;
+@model Dictionary<string, System.Data.DataTable>
+@section headerbox{
+
+}
+@section maincontent{
+    <script src="~/Scripts/Accordian/jquery-2.1.1.min.js"></script>
+    <script src="~/Scripts/Accordian/jquery-ui-1.11.2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#accordion").accordion(
+                {
+                    collapsible: true,
+                    heightStyle: "content",
+                    autoHeight: true,
+                    clearStyle: true,
+                }).on("click", "h4.ui-accordion-header", function (e) {
+                    $("h4.ui-accordion-header").each(function (i, el) {
+                        $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                    })
+                });
+            $('h4:eq(0)').find(".panel-icon").text("-");
+        });
+    </script>
+    <script>
+        function searchFunc() {
+            var filter = document.getElementById("searchInput").value.toUpperCase();
+            $("#accordion").hide();
+            $("#allData").show();
+            $("#allDt tr").each(function (index) {
+                if (index != 0) {
+
+                    $row = $(this);
+
+                    var id = $row.find("td:first").text().toUpperCase();
+
+                    if (id.indexOf(filter) > -1) {
+                        $(this).show();
+                    }
+                    else {
+                        $(this).hide();
+                    }
+                }
+            });
+        }
+        function searchEnd() {
+            var filter = document.getElementById("searchInput").value;
+            if (filter == "") {
+                $("#accordion").show();
+                $("#allData").hide();
+            }
+        }
+        $(document).ready(function () {
+            document.getElementById("minus").hidden = true;
+        });
+        var IsShowAll = true;
+        function ShowAll() {
+            $("#accordion").show();
+            $("#AllKeys").hide();
+            if (IsShowAll) {
+                $('#accordion .ui-accordion-content').show();
+                $(".panel-icon").text("-");
+                IsShowAll = false;
+                document.getElementById("plus").hidden = true;
+                document.getElementById("minus").hidden = false;
+            }
+            else {
+                $('#accordion .ui-accordion-content').hide();
+                $(".panel-icon").text("+");
+                IsShowAll = true;
+                document.getElementById("minus").hidden = true;
+                document.getElementById("plus").hidden = false;
+            }
+        }
+    </script>
+    <div>
+        <div>
+            <a id="sumry" title="Show all records" style="text-decoration:none; font-family:Cambria;font-size:x-large;color:darkblue;" onclick="ShowAll()">Summary </a>
+            <span>
+                <img id="plus" src="~/Images/add.png" onclick="ShowAll()" /><img id="minus" src="~/Images/minus.png" style="height:15px" onclick="ShowAll()" />
+            </span>
+        </div>
+        <div id="allData" hidden>
+            @{
+                DataTable allDt = new DataTable();
+                allDt.BeginLoadData();
+                foreach (DataTable t in Model.Values)
+                {
+                    allDt.Merge(t); 
+                }
+                allDt.EndLoadData();
+                <table id="allDt" style="width:100%">
+                    <thead>
+                        <tr class="brdr yelbtn">
+                            @foreach (DataColumn col in allDt.Columns)
+                            {
+                                <th>@col.Caption</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int iRow = 0; iRow < @allDt.Rows.Count; iRow++)
+                        {
+                            <tr class="brdr blufnt">
+                                @for (int iCol = 0; iCol < @allDt.Columns.Count; iCol++)
+                                {
+                                    if (iCol == 1)
+                                    {
+                                        <td style="border: 1px solid #000000;text-align:center;">
+                                            <a href="@Url.Action("SystemDetails", "Home", new { sysId = @allDt.Rows[iRow][iCol-1].ToString(), grpId= @allDt.Rows[iRow][iCol + 1].ToString(), keyId= @allDt.Rows[iRow][iCol + 2].ToString(), tab="System" })">
+                                                @allDt.Rows[iRow][iCol].ToString()
+                                            </a>
+                                        </td>
+                                    }
+                                    else if (iCol == 2)
+                                    {
+                                        <td style="border: 1px solid #000000;text-align:center;">
+                                            <a href="@Url.Action("SystemDetails", "Home", new { sysId = @allDt.Rows[iRow][iCol-2].ToString(), grpId= @allDt.Rows[iRow][iCol].ToString(), keyId= @allDt.Rows[iRow][iCol + 1].ToString(), tab="Group" })">
+                                                @allDt.Rows[iRow][iCol].ToString()
+                                            </a>
+                                        </td>
+                                    }
+                                    else if (iCol == 3)
+                                    {
+                                        <td style="border: 1px solid #000000;text-align:center;">
+                                            <a href="@Url.Action("SystemDetails", "Home", new { sysId = @allDt.Rows[iRow][iCol-3].ToString(), grpId= @allDt.Rows[iRow][iCol - 1].ToString(), keyId= @allDt.Rows[iRow][iCol].ToString(), tab="Key" })">
+                                                @allDt.Rows[iRow][iCol].ToString()
+                                            </a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border: 1px solid #000000;text-align:center;">
+                                            @allDt.Rows[iRow][iCol].ToString()
+                                        </td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            <table></table>
+        </div>
+        <div id="accordion">
+            @if (Model.Count != 0)
+            {
+                foreach (var item in Model)
+                {
+                    <h4>
+                        @item.Key
+                        <span class="panel-icon" title="Collapse/Expand" style="color: black; font-size: 16px; float:right;">+</span>
+                    </h4>
+                    <div>
+                        <table id=@item.Key.Replace(" ", "") style="width:100%">
+                            <thead>
+                                <tr class="brdr yelbtn">
+                                    @for (int iCol = 0; iCol < @item.Value.Columns.Count; iCol++)
+                                    {
+                                        <th>
+                                            @item.Value.Columns[iCol].ColumnName
+                                        </th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody style="height:auto;">
+                                @for (int iRow = 0; iRow < @item.Value.Rows.Count; iRow++)
+                                {
+                                    <tr class="brdr blufnt">
+                                        @for (int iCol = 0; iCol < @item.Value.Columns.Count; iCol++)
+                                        {
+                                            if (iCol == 1)
+                                            {
+                                                <td style="border: 1px solid #000000;text-align:center;">
+                                                    <a href="@Url.Action("SystemDetails", "Home", new { sysId = @item.Value.Rows[iRow][iCol-1].ToString(), grpId= @item.Value.Rows[iRow][iCol + 1].ToString(), keyId= @item.Value.Rows[iRow][iCol + 2].ToString(), tab="System" })">
+                                                        @item.Value.Rows[iRow][iCol].ToString()
+                                                    </a>
+                                                </td>
+                                            }
+                                            else if (iCol == 2)
+                                            {
+                                                <td style="border: 1px solid #000000;text-align:center;">
+                                                    <a href="@Url.Action("SystemDetails", "Home", new { sysId = @item.Value.Rows[iRow][iCol-2].ToString(), grpId= @item.Value.Rows[iRow][iCol].ToString(), keyId= @item.Value.Rows[iRow][iCol + 1].ToString(), tab="Group" })">
+                                                        @item.Value.Rows[iRow][iCol].ToString()
+                                                    </a>
+                                                </td>
+                                            }
+                                            else if (iCol == 3)
+                                            {
+                                                <td style="border: 1px solid #000000;text-align:center;">
+                                                    <a href="@Url.Action("SystemDetails", "Home", new { sysId = @item.Value.Rows[iRow][iCol-3].ToString(), grpId= @item.Value.Rows[iRow][iCol - 1].ToString(), keyId= @item.Value.Rows[iRow][iCol].ToString(), tab="Key" })">
+                                                        @item.Value.Rows[iRow][iCol].ToString()
+                                                    </a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td style="border: 1px solid #000000;text-align:center;">
+                                                    @item.Value.Rows[iRow][iCol].ToString()
+                                                </td>
+                                            }
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            }
+            else
+            {
+                <h3>No search results Found</h3>
+            }
+        </div>
+    </div>
+}

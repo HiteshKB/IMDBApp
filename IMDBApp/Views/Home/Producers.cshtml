@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Producers";
+}
+@model System.Data.DataTable
+@section maincontent{
+    <div style="margin-top: 10px;">
+        <a id="sumry" style="text-decoration:none; font-family:Cambria;font-size:x-large;color:darkblue;">Producers</a>
+    </div>
+    <div>
+        <table id="GroupsDetails" style="width:100%;table-layout: fixed; margin-top:10px;">
+            <thead>
+                <tr class="brdr yelbtn">
+                    @for (int iCol = 0; iCol < Model.Columns.Count; iCol++)
+                    {
+                        <th>
+                            @Model.Columns[iCol].ColumnName
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody style="height:auto;">
+                @for (int iRow = 0; iRow < Model.Rows.Count; iRow++)
+                {
+                    <tr class="brdr blufnt">
+                        @for (int iCol = 0; iCol < Model.Columns.Count; iCol++)
+                        {
+                            <td style="border: 1px solid #000000;text-align:center;width: 50px;overflow: hidden;">
+                                @Model.Rows[iRow][iCol].ToString()
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+}
+
+
+
+
