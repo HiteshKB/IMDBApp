@@ -96,3 +96,26 @@ BEGIN
 	return @@ROWCOUNT
 END
 GO
+
+----------------------------------------------------------------------------------------------
+--Funtions
+----------------------------------------------------------------------------------------------
+
+CREATE FUNCTION [dbo].[GetActorsList]      
+(
+	-- Add the parameters for the function here
+	@movieID smallInt
+)
+RETURNS varchar(1000)
+AS
+BEGIN
+	DECLARE @result varchar(1000)
+	SET @result = ''
+	SELECT @result = @result + a.Name + ',' 
+	FROM Actors a
+	WHERE a.ActorID IN (select map.ActorID from MovieStarMap map where map.MovieID=@movieID)
+	-- Return the result of the function
+	RETURN substring(@result, 0, len(@result))
+
+END
+GO
